@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { FaHeart } from 'react-icons/fa';
 import Dashboard from '../components/Dashboard';
 import Footer from '../components/Footer';
 import GalleryInfo from '../components/GalleryInfo';
@@ -8,6 +7,7 @@ import GalleryList from '../components/GalleryList.tsx';
 import supabase from '../utils/client';
 import { Gallery, Painting, SortOption, ActiveTab } from '../utils/types';
 import 'leaflet/dist/leaflet.css';
+
 
 export default function GalleryView() {
   const [galleries, setGalleries] = useState<Gallery[]>([]);
@@ -91,8 +91,10 @@ export default function GalleryView() {
   const toggleGalleryFavorite = (gallery: Gallery) => {
     if (galleryFavorites.some(fav => fav.galleryId === gallery.galleryId)) {
       setGalleryFavorites(galleryFavorites.filter(fav => fav.galleryId !== gallery.galleryId));
+      toast.success("Removed from favorites!");
     } else {
       setGalleryFavorites([...galleryFavorites, gallery]);
+      toast.success("Added to favorites!");
     }
   };
 

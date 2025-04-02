@@ -1,6 +1,7 @@
-import { FaHeart } from 'react-icons/fa';
+import { FaHeart, FaHeartBroken } from 'react-icons/fa';
 import GalleryMap from './GalleryMap';
 import { Gallery, Painting } from '../utils/types';
+import toast, { Toaster } from "react-hot-toast";
 
 const GalleryInfo = ({ selectedGallery, favorites, setFavorites, paintings }: {
   selectedGallery: Gallery;
@@ -8,10 +9,26 @@ const GalleryInfo = ({ selectedGallery, favorites, setFavorites, paintings }: {
   setFavorites: React.Dispatch<React.SetStateAction<Gallery[]>>;
   paintings: Painting[];
 }) => {
+
+  const isFavorited = favorites.some(g => g.galleryId === selectedGallery.galleryId);
+
+  const toggleFavorite = () => {
+    setFavorites(prevFavorites => {
+      if (isFavorited) {
+        toast.success("Removed gallery from favorites", { id: "fav-toast" });
+        return prevFavorites.filter(g => g.galleryId !== selectedGallery.galleryId);
+      } else {
+        toast.success("Added gallery to favorites!", { id: "fav-toast" });
+        return [...prevFavorites, selectedGallery];
+      }
+    });
+  };
+
   return (
     <div className="w-2/4 space-y-6">
       {selectedGallery ? (
         <>
+          <Toaster />
           <div className="bg-gray-800 rounded-lg p-4 shadow-lg">
             <h2 className="font-bold text-xl mb-3">{selectedGallery.galleryName}</h2>
             <p><strong>Gallery Native Name:</strong> {selectedGallery.galleryNativeName}</p>
@@ -27,10 +44,18 @@ const GalleryInfo = ({ selectedGallery, favorites, setFavorites, paintings }: {
               </a>
             </p>
             <button
-              onClick={() => setFavorites([...favorites, ...paintings.filter(p => !favorites.some(f => f.galleryId === p.galleryId))])}
-              className="mt-3 bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded flex items-center"
+              onClick={toggleFavorite}
+              className="mt-3 bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded flex items-center cursor-pointer"
             >
-              <FaHeart className="mr-2" /> Add Favorites
+              {isFavorited ? (
+                <>
+                  <FaHeartBroken className="mr-2 text-red-400" /> Remove from Favorites
+                </>
+              ) : (
+                <>
+                  <FaHeart className="mr-2 text-red-400" /> Add to Favorites
+                </>
+              )}
             </button>
           </div>
 
