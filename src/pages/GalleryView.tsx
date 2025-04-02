@@ -59,7 +59,9 @@ export default function GalleryView() {
       setAllPaintings(paintingsData);
       setIsLoading(false);
     } else {
-      const { data, error } = await supabase.from('paintings').select('*');
+      const { data, error } = await supabase
+        .from('paintings')
+        .select('*, artists!inner(*)');
       if (error) {
         console.error('Error fetching paintings:', error);
         setIsLoading(false);
