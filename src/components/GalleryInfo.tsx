@@ -1,27 +1,24 @@
 import { FaHeart, FaHeartBroken } from 'react-icons/fa';
 import GalleryMap from './GalleryMap';
-import { Gallery, Painting } from '../utils/types';
+import { Gallery } from '../utils/types';
 import toast, { Toaster } from "react-hot-toast";
 
-const GalleryInfo = ({ selectedGallery, favorites, setFavorites, paintings }: {
+const GalleryInfo = ({ selectedGallery, favorites, setFavorites }: {
   selectedGallery: Gallery;
   favorites: Gallery[];
-  setFavorites: React.Dispatch<React.SetStateAction<Gallery[]>>;
-  paintings: Painting[];
+  setFavorites: Function;
 }) => {
 
   const isFavorited = favorites.some(g => g.galleryId === selectedGallery.galleryId);
 
   const toggleFavorite = () => {
-    setFavorites(prevFavorites => {
-      if (isFavorited) {
-        toast.success("Removed gallery from favorites", { id: "fav-toast" });
-        return prevFavorites.filter(g => g.galleryId !== selectedGallery.galleryId);
-      } else {
-        toast.success("Added gallery to favorites!", { id: "fav-toast" });
-        return [...prevFavorites, selectedGallery];
-      }
-    });
+    if (isFavorited) {
+      toast.success("Removed gallery from favorites", { id: "fav-toast" });
+    } else {
+      toast.success("Added gallery to favorites!", { id: "fav-toast" });
+    }
+
+    setFavorites(selectedGallery);
   };
 
   return (
@@ -30,7 +27,7 @@ const GalleryInfo = ({ selectedGallery, favorites, setFavorites, paintings }: {
         <>
           <Toaster />
           <div className="bg-gray-800 rounded-lg p-4 shadow-lg">
-            <h2 className="font-bold text-xl mb-3">{selectedGallery.galleryName}</h2>
+            <h2 className="font-bold text-3xl mb-3">{selectedGallery.galleryName}</h2>
             <p><strong>Gallery Native Name:</strong> {selectedGallery.galleryNativeName}</p>
             <p><strong>Location:</strong> {selectedGallery.galleryAddress}, {selectedGallery.galleryCity}, {selectedGallery.galleryCountry}</p>
             <p>

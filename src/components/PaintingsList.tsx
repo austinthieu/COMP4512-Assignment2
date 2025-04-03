@@ -1,4 +1,4 @@
-import { Painting, SortOption } from '../types';
+import { Painting, SortOption } from '../utils/types';
 
 interface PaintingsListProps {
   paintings: Painting[];
@@ -17,6 +17,7 @@ const PaintingsList = ({
   const sortedPaintings = [...paintings].sort((a, b) => {
     if (sortBy === 'title') return a.title.localeCompare(b.title);
     if (sortBy === 'year') return a.yearOfWork - b.yearOfWork;
+    if (sortBy === 'lastName') return a.artists.lastName.localeCompare(b.artists.lastName);
     return 0;
   });
 
@@ -34,6 +35,7 @@ const PaintingsList = ({
           >
             <option value="title">Title</option>
             <option value="year">Year</option>
+            <option value="lastName">Artist</option>
           </select>
         </div>
       </div>
@@ -51,7 +53,7 @@ const PaintingsList = ({
                   <img
                     src={`./paintings/square/${painting.imageFileName}.jpg`}
                     alt=""
-                    className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-md shadow-md"
+                    className="w-20 h-20 md:w-28 md:h-28 object-cover rounded-md shadow-md"
                   />
                 </div>
                 <div className="flex flex-col justify-center">
@@ -61,11 +63,6 @@ const PaintingsList = ({
                     <span className="mx-1">•</span>
                     <span>{painting.yearOfWork}</span>
                   </p>
-                  <div className="mt-2">
-                    <span className="text-xs text-blue-400 hover:text-blue-300 flex items-center">
-                      View details
-                    </span>
-                  </div>
                 </div>
               </div>
             </li>

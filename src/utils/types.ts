@@ -31,10 +31,24 @@ export interface Painting {
   medium: string;
   cost: number;
   MSRP: number;
+  artists: Artists;
   googleLink?: string;
   googleDescription?: string;
   wikiLink?: string;
   jsonAnnotations: string;
+}
+
+export interface Artists {
+  firstName: string;
+  lastName: string;
+}
+
+export interface Genre {
+  genreId: number;
+  genreName: string;
+  eraId: number;
+  description: string;
+  wikiLink: string;
 }
 
 export type SortOption = 'title' | 'year';
