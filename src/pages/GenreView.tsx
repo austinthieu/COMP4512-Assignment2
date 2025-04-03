@@ -4,6 +4,7 @@ import Dashboard from "../components/Dashboard";
 import ItemList from "../components/ItemList";
 import GenreInfo from "../components/GenreInfo";
 import GenrePaintings from '../components/GenrePaintings';
+import Footer from '../components/Footer';
 import Modal from '../components/Modal';
 
 export default function GenreView() {
@@ -53,6 +54,7 @@ export default function GenreView() {
             />
           </div>
 
+
           {/* Painting Modal */}
           {modalIsOpen && selectedPainting && (
             <Modal
@@ -67,6 +69,7 @@ export default function GenreView() {
 
         </div>
       </main >
+      <Footer />
     </div >
   )
 

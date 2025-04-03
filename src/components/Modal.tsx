@@ -7,7 +7,7 @@ interface PaintingModalProps {
   modalIsOpen: boolean;
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   selectedPainting: Painting | null;
-  paintingFavorites: Painting[];
+  favorites: Painting[];
   setPaintingsFavorite: React.Dispatch<React.SetStateAction<Painting[]>>;
 }
 
@@ -45,7 +45,7 @@ const PaintingModal: React.FC<PaintingModalProps> = ({ modalIsOpen, setModalIsOp
             {/* Favorite Button */}
             <button
               onClick={toggleFavorite}
-              className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors cursor-pointer"
+              className="p-2 bg-red-600 text-white rounded-full hover:bg-red-400 transition-colors cursor-pointer"
               aria-label="Toggle favorite"
             >
               {isFavorited ? <HeartCrack size={20} /> : <Heart size={20} />}
@@ -86,12 +86,14 @@ const PaintingModal: React.FC<PaintingModalProps> = ({ modalIsOpen, setModalIsOp
 
             {/* Painting Info */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 mb-2">
-              <div className="col-span-2 mb-4">
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Description</h3>
-                <p className="text-gray-600 dark:text-gray-300 max-h-84 overflow-y-auto">
-                  {selectedPainting.description}
-                </p>
-              </div>
+              {selectedPainting.description &&
+                <div className="col-span-2 mb-4">
+                  <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Description</h3>
+                  <p className="text-gray-600 dark:text-gray-300 max-h-84 overflow-y-auto">
+                    {selectedPainting.description}
+                  </p>
+                </div>
+              }
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Artwork Details</h3>
                 <ul className="space-y-1 text-gray-600 dark:text-gray-300">

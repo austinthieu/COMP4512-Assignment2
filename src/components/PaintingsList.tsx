@@ -22,7 +22,7 @@ const PaintingsList = ({
   });
 
   return (
-    <div className="w-full bg-gray-800 rounded-lg p-6 shadow-lg">
+    <div className="w-full bg-gray-800 rounded-lg p-4 shadow-lg">
       <div className="flex justify-between items-center mb-6">
         <h2 className="font-bold text-xl text-white">Paintings</h2>
         <div className="flex items-center">
@@ -45,19 +45,19 @@ const PaintingsList = ({
           {sortedPaintings.map(painting => (
             <li
               key={painting.paintingId}
-              className="bg-gray-700 rounded-lg overflow-hidden cursor-pointer hover:bg-gray-600 transition-colors duration-200"
+              className="bg-gray-700 rounded-lg cursor-pointer hover:bg-gray-600 transition-colors duration-200"
               onClick={() => onSelectPainting(painting)}
             >
               <div className="flex p-4">
-                <div className="flex-shrink-0 mr-4">
+                <div className="flex">
                   <img
                     src={`./paintings/square/${String(painting.imageFileName).padStart(6, '0')}.jpg`}
                     alt=""
-                    className="w-20 h-20 md:w-28 md:h-28 object-cover rounded-md shadow-md"
+                    className="h-full max-w-32 object-cover rounded-md shadow-md"
                   />
                 </div>
-                <div className="flex flex-col justify-center">
-                  <h3 className="font-bold text-lg mb-1 text-white">{painting.title}</h3>
+                <div className="flex flex-col justify-center ml-4">
+                  <h3 className="font-bold text-medium mb-1 text-white">{painting.title}</h3>
                   <p className="text-sm text-gray-300">
                     <span className="font-medium">{painting.artists.firstName} {painting.artists.lastName}</span>
                     <span className="mx-1">•</span>

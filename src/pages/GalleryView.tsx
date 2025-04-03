@@ -60,7 +60,7 @@ export default function GalleryView() {
           )}
 
           {/* Right column - Paintings */}
-          <div className="w-1/4 bg-gray-800 rounded-lg p-4 shadow-lg">
+          <div className="w-1/3 bg-gray-800 rounded-lg p-4 shadow-lg">
             <PaintingsList
               paintings={paintings}
               sortBy={sortBy}
