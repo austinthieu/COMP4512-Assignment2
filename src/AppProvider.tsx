@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
+import { useLocation } from "react-router";
 import supabase from './utils/client';
 import { Painting, Gallery, SortOption, ActiveTab, Genre } from './utils/types';
 
@@ -54,6 +55,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [activeTab, setActiveTab] = useState<ActiveTab>('galleries');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const location = useLocation();
 
   // Combined favorites count
   const combinedFavoritesCount = galleryFavorites.length + paintingFavorites.length + genreFavorites.length;
@@ -92,7 +94,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       } else {
         const { data, error } = await supabase
           .from('paintings')
-          .select('*, artists!inner(firstName, lastName)');
+          .select('*, artists!inner(firstName, lastName), galleries!inner(galleryName, galleryCity, galleryWebSite)');
         if (!error && data) {
           setAllPaintings(data);
           localStorage.setItem('all_paintings', JSON.stringify(data));
@@ -115,7 +117,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       if (localGenres) {
         setGenres(JSON.parse(localGenres));
       } else {
-        const { data, error } = await supabase.from('genres').select('*');
+        const { data, error } = await supabase.from('genres').select('*, paintinggenres!inner(*)');
         if (!error && data) {
           setGenres(data);
           localStorage.setItem('genres', JSON.stringify(data));
@@ -129,15 +131,31 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     fetchGenres();
   }, []);
 
+  useEffect(() => {
+    setSelectedGallery(undefined);
+    setSelectedGenre(undefined);
+  }, [location.pathname]);
+
   // Load paintings for the selected gallery
   useEffect(() => {
-    if (selectedGallery) {
-      const filteredPaintings = allPaintings.filter(painting => painting.galleryId === selectedGallery.galleryId);
+    if (selectedGallery || selectedGenre) {
+      let filteredPaintings = allPaintings;
+
+      if (selectedGallery) {
+        filteredPaintings = filteredPaintings.filter(painting => painting.galleryId === selectedGallery.galleryId);
+      }
+
+      if (selectedGenre) {
+        filteredPaintings = filteredPaintings.filter(painting =>
+          selectedGenre.paintinggenres.some(pg => pg.paintingId === painting.paintingId)
+        );
+      }
+
       setPaintings(filteredPaintings);
     } else {
       setPaintings([]);
     }
-  }, [selectedGallery, allPaintings]);
+  }, [selectedGallery, selectedGenre, allPaintings]);
 
   // Load favorites from localStorage on first render
   useEffect(() => {

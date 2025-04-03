@@ -9,7 +9,9 @@ const GalleryInfo = ({ selectedGallery, favorites, setFavorites }: {
   setFavorites: Function;
 }) => {
 
-  const isFavorited = favorites.some(g => g.galleryId === selectedGallery.galleryId);
+  const isFavorited = selectedGallery
+    ? favorites.some(g => g.galleryId === selectedGallery.galleryId)
+    : false;
 
   const toggleFavorite = () => {
     if (isFavorited) {

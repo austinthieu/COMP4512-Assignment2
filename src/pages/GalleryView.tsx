@@ -24,7 +24,7 @@ export default function GalleryView() {
     modalIsOpen,
     setModalIsOpen,
     paintingFavorites,
-    setPaintingFavorites,
+    togglePaintingFavorite,
     combinedFavoritesCount,
     toggleGalleryFavorite,
   } = useAppContext();
@@ -42,7 +42,7 @@ export default function GalleryView() {
         <div className="flex gap-6">
           {/* Left column - Gallery List */}
           <ItemList
-            items={galleries}
+            items={galleries.sort((a, b) => a.galleryName.localeCompare(b.galleryName))}
             selectedItem={selectedGallery}
             setSelectedItem={setSelectedGallery}
             getKey={(gallery) => gallery.galleryId}
@@ -76,9 +76,8 @@ export default function GalleryView() {
             modalIsOpen={modalIsOpen}
             setModalIsOpen={setModalIsOpen}
             selectedPainting={selectedPainting}
-            selectedGallery={selectedGallery}
             favorites={paintingFavorites}
-            setPaintingsFavorite={setPaintingFavorites}
+            setPaintingsFavorite={togglePaintingFavorite}
           />
         )}
       </main>

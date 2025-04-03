@@ -51,7 +51,7 @@ const PaintingsList = ({
               <div className="flex p-4">
                 <div className="flex-shrink-0 mr-4">
                   <img
-                    src={`./paintings/square/${painting.imageFileName}.jpg`}
+                    src={`./paintings/square/${String(painting.imageFileName).padStart(6, '0')}.jpg`}
                     alt=""
                     className="w-20 h-20 md:w-28 md:h-28 object-cover rounded-md shadow-md"
                   />

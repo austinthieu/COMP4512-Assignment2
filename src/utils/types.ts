@@ -36,6 +36,7 @@ export interface Painting {
   googleDescription?: string;
   wikiLink?: string;
   jsonAnnotations: string;
+  galleries: Gallery;
 }
 
 export interface Artists {
@@ -49,6 +50,13 @@ export interface Genre {
   eraId: number;
   description: string;
   wikiLink: string;
+  paintinggenres: paintinggenres;
+}
+
+export interface paintinggenres {
+  paintingGenreId: number;
+  paintingId: number;
+  genreId: number;
 }
 
 export type SortOption = 'title' | 'year';
