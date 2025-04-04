@@ -15,9 +15,9 @@ const GalleryInfo = ({ selectedGallery, favorites, setFavorites }: {
 
   const toggleFavorite = () => {
     if (isFavorited) {
-      toast.success("Removed gallery from favorites", { id: "fav-toast" });
+      toast.success("Removed gallery from favorites", { id: `fav-toast-${selectedGallery.galleryId}` });
     } else {
-      toast.success("Added gallery to favorites!", { id: "fav-toast" });
+      toast.success("Added gallery to favorites!", { id: `fav-toast-${selectedGallery.galleryId}` });
     }
 
     setFavorites(selectedGallery);

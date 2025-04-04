@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import AppProvider from "./AppProvider";
 import GalleryView from "./pages/GalleryView";
 import GenreView from './pages/GenreView';
+import ArtistView from './pages/ArtistView';
 import Home from "./pages/Home";
 import "./index.css";
 
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/" element={<Home />} />
           <Route path="/galleries" element={<GalleryView />} />
           <Route path="/genres" element={<GenreView />} />
+          <Route path="/artists" element={<ArtistView />} />
         </Routes>
       </AppProvider>
     </BrowserRouter>

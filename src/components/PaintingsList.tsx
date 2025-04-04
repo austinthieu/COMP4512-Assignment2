@@ -1,10 +1,12 @@
 import { Painting, SortOption } from '../utils/types';
+import { useAppContext } from '../AppProvider';
 
 interface PaintingsListProps {
   paintings: Painting[];
   sortBy: SortOption;
   onSortChange: (sortOption: SortOption) => void;
   onSelectPainting: (painting: Painting) => void;
+
 }
 
 const PaintingsList = ({
@@ -13,6 +15,7 @@ const PaintingsList = ({
   onSortChange,
   onSelectPainting
 }: PaintingsListProps) => {
+  const { selectedArtist } = useAppContext();
   // Sort paintings based on selected sort criteria
   const sortedPaintings = [...paintings].sort((a, b) => {
     if (sortBy === 'title') return a.title.localeCompare(b.title);
@@ -35,7 +38,7 @@ const PaintingsList = ({
           >
             <option value="title">Title</option>
             <option value="year">Year</option>
-            <option value="lastName">Artist</option>
+            {!selectedArtist && <option value="lastName">Artist</option>}
           </select>
         </div>
       </div>

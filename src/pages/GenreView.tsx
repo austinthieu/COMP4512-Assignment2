@@ -30,7 +30,7 @@ export default function GenreView() {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
       {/* Header */}
-      <Dashboard activeTab={activeTab} setActiveTab={setActiveTab} favoritesCount={combinedFavoritesCount} />
+      <Dashboard />
       <main className="container mx-auto px-4 py-6">
         <div className="flex gap-6">
 

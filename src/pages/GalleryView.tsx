@@ -14,8 +14,6 @@ export default function GalleryView() {
     setSelectedGallery,
     galleryFavorites,
     isLoading,
-    activeTab,
-    setActiveTab,
     paintings,
     sortBy,
     setSortBy,
@@ -25,7 +23,6 @@ export default function GalleryView() {
     setModalIsOpen,
     paintingFavorites,
     togglePaintingFavorite,
-    combinedFavoritesCount,
     toggleGalleryFavorite,
   } = useAppContext();
 
@@ -36,7 +33,7 @@ export default function GalleryView() {
       {isLoading && <LoadingScreen />}
 
       {/* Header */}
-      <Dashboard activeTab={activeTab} setActiveTab={setActiveTab} favoritesCount={combinedFavoritesCount} />
+      <Dashboard />
 
       <main className="container mx-auto px-4 py-6">
         <div className="flex gap-6">
@@ -64,7 +61,7 @@ export default function GalleryView() {
             <PaintingsList
               paintings={paintings}
               sortBy={sortBy}
-              onSortChange={(option) => setSortBy(option)}
+              onSortChange={setSortBy}
               onSelectPainting={handleSelectPainting}
             />
           </div>

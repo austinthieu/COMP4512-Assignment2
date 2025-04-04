@@ -21,9 +21,9 @@ const PaintingModal: React.FC<PaintingModalProps> = ({ modalIsOpen, setModalIsOp
 
   const toggleFavorite = () => {
     if (isFavorited) {
-      toast.success("Removed painting from favorites", { id: "fav-toast" });
+      toast.success("Removed painting from favorites", { id: `fav-toast-${selectedPainting.paintingId}` });
     } else {
-      toast.success("Added painting to favorites!", { id: "fav-toast" });
+      toast.success("Added painting to favorites!", { id: `fav-toast-${selectedPainting.paintingId}` });
     }
 
     setPaintingsFavorite(selectedPainting);

@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router";
 import { FaPaintbrush } from "react-icons/fa6";
-import { useAppContext } from "../AppProvider"; // Adjust import path as needed
+import { useAppContext } from "../AppProvider";
 
 export default function Dashboard() {
   const navigate = useNavigate();

@@ -40,8 +40,15 @@ export interface Painting {
 }
 
 export interface Artists {
+  artistId: number;
   firstName: string;
   lastName: string;
+  nationality: string;
+  gender: string;
+  yearOfBirth: number;
+  yearOfDeath: number;
+  details: string;
+  artistLink: string;
 }
 
 export interface Genre {
@@ -59,6 +66,5 @@ export interface paintinggenres {
   genreId: number;
 }
 
-export type SortOption = 'title' | 'year';
+export type SortOption = 'title' | 'year' | 'artist';
 
-export type ActiveTab = 'galleries' | 'favorites';

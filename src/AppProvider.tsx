@@ -1,22 +1,24 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { useLocation } from "react-router";
 import supabase from './utils/client';
-import { Painting, Gallery, SortOption, ActiveTab, Genre } from './utils/types';
+import { Painting, Gallery, SortOption, Genre, Artists } from './utils/types';
 
 interface AppState {
   // State
   galleries: Gallery[];
   paintings: Painting[];
+  artists: Artists[];
   allPaintings: Painting[];
   genres: Genre[];
-  selectedGallery: Gallery | undefined;
-  selectedPainting: Painting | undefined;
-  selectedGenre: Genre | undefined;
+  selectedGallery: Gallery;
+  selectedPainting: Painting;
+  selectedGenre: Genre;
+  selectedArtist: Artists;
   galleryFavorites: Gallery[];
   paintingFavorites: Painting[];
+  artistFavorites: Artists[];
   genreFavorites: Genre[];
   sortBy: SortOption;
-  activeTab: ActiveTab;
   isLoading: boolean;
   modalIsOpen: boolean;
   combinedFavoritesCount: number;
@@ -25,15 +27,17 @@ interface AppState {
   setSelectedGallery: (gallery: Gallery | undefined) => void;
   setSelectedPainting: (painting: Painting | undefined) => void;
   setSelectedGenre: (genre: Genre | undefined) => void;
-  setActiveTab: (tab: ActiveTab) => void;
+  setSelectedArtist: (artist: Artists | undefined) => void;
   setSortBy: (sortOption: SortOption) => void;
   setModalIsOpen: (isOpen: boolean) => void;
   setPaintingFavorites: (paintings: Painting[]) => void;
   setGalleryFavorites: (galleries: Gallery[]) => void;
+  setArtistsFavorites: (artists: Artists[]) => void;
   setGenreFavorites: (genres: Genre[]) => void;
   handleSelectPainting: (painting: Painting) => void;
   toggleGalleryFavorite: (gallery: Gallery) => void;
   togglePaintingFavorite: (painting: Painting) => void;
+  toggleArtistFavorite: (artist: Artists) => void;
 }
 
 // Create context with default values
@@ -43,22 +47,23 @@ const AppContext = createContext<AppState | undefined>(undefined);
 const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [galleries, setGalleries] = useState<Gallery[]>([]);
   const [paintings, setPaintings] = useState<Painting[]>([]);
+  const [artists, setArtists] = useState<Artists[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
-  const [selectedGallery, setSelectedGallery] = useState<Gallery | undefined>(undefined);
-  const [selectedPainting, setSelectedPainting] = useState<Painting | undefined>(undefined);
-  const [selectedGenre, setSelectedGenre] = useState<Genre | undefined>(undefined);
+  const [selectedGallery, setSelectedGallery] = useState<Gallery>();
+  const [selectedPainting, setSelectedPainting] = useState<Painting>();
+  const [selectedGenre, setSelectedGenre] = useState<Genre>();
+  const [selectedArtist, setSelectedArtist] = useState<Artists>();
   const [allPaintings, setAllPaintings] = useState<Painting[]>([]);
   const [galleryFavorites, setGalleryFavorites] = useState<Gallery[]>([]);
   const [paintingFavorites, setPaintingFavorites] = useState<Painting[]>([]);
-  const [genreFavorites, setGenreFavorites] = useState<Genre[]>([]);
+  const [artistFavorites, setArtistFavorites] = useState<Artists[]>([]);
   const [sortBy, setSortBy] = useState<SortOption>('title');
-  const [activeTab, setActiveTab] = useState<ActiveTab>('galleries');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const location = useLocation();
 
   // Combined favorites count
-  const combinedFavoritesCount = galleryFavorites.length + paintingFavorites.length + genreFavorites.length;
+  const combinedFavoritesCount = galleryFavorites.length + paintingFavorites.length + artistFavorites.length;
 
   // Fetch galleries from Supabase or local storage
   useEffect(() => {
@@ -83,7 +88,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     fetchGalleries();
   }, []);
 
-  // Fetch all paintings at once and store them in local storage
+  // Fetch all paintings from Supabase or local storage
   useEffect(() => {
     const fetchAllPaintings = async () => {
       console.log('Fetching all paintings...');
@@ -100,6 +105,31 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           localStorage.setItem('all_paintings', JSON.stringify(data));
         } else {
           console.error('Error fetching paintings:', error);
+        }
+      }
+      setIsLoading(false);
+    };
+
+    fetchAllPaintings();
+  }, []);
+
+  // Fetch all artists from Supabase or local storage
+  useEffect(() => {
+    const fetchAllPaintings = async () => {
+      console.log('Fetching all artists...');
+      setIsLoading(true);
+      const localArtists = localStorage.getItem('artists');
+      if (localArtists) {
+        setArtists(JSON.parse(localArtists));
+      } else {
+        const { data, error } = await supabase
+          .from('artists')
+          .select('*');
+        if (!error && data) {
+          setArtists(data);
+          localStorage.setItem('artists', JSON.stringify(data));
+        } else {
+          console.error('Error fetching artists', error);
         }
       }
       setIsLoading(false);
@@ -134,11 +164,12 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
     setSelectedGallery(undefined);
     setSelectedGenre(undefined);
+    setSelectedArtist(undefined);
   }, [location.pathname]);
 
-  // Load paintings for the selected gallery
+  // Load paintings for the selected Galleru/Genre/Artist
   useEffect(() => {
-    if (selectedGallery || selectedGenre) {
+    if (selectedGallery || selectedGenre || selectedArtist) {
       let filteredPaintings = allPaintings;
 
       if (selectedGallery) {
@@ -151,11 +182,15 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         );
       }
 
+      if (selectedArtist) {
+        filteredPaintings = filteredPaintings.filter(painting => painting.artistId === selectedArtist.artistId)
+      }
+
       setPaintings(filteredPaintings);
     } else {
       setPaintings([]);
     }
-  }, [selectedGallery, selectedGenre, allPaintings]);
+  }, [selectedGallery, selectedGenre, selectedArtist, allPaintings]);
 
   // Load favorites from localStorage on first render
   useEffect(() => {
@@ -167,6 +202,11 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const savedPaintingFavorites = localStorage.getItem('paintingFavorites');
     if (savedPaintingFavorites) {
       setPaintingFavorites(JSON.parse(savedPaintingFavorites));
+    }
+
+    const savedArtistFavorites = localStorage.getItem('artistFavorites');
+    if (savedArtistFavorites) {
+      setArtistFavorites(JSON.parse(savedArtistFavorites));
     }
   }, []);
 
@@ -183,15 +223,15 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
       // Update the favorites list
       const newFavorites = isCurrentlyFavorite
-        ? prevFavorites.filter(g => g.galleryId !== gallery.galleryId) // Remove if already a favorite
-        : [...prevFavorites, gallery]; // Add to favorites if not already in the list
+        ? prevFavorites.filter(g => g.galleryId !== gallery.galleryId)
+        : [...prevFavorites, gallery];
 
       // Only update localStorage if the favorites actually change
       if (newFavorites !== prevFavorites) {
         localStorage.setItem('galleryFavorites', JSON.stringify(newFavorites));
       }
 
-      return newFavorites; // Return the new favorites list to update state
+      return newFavorites;
     });
   };
 
@@ -208,22 +248,36 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     });
   };
 
+  // Toggle painting favorite
+  const toggleArtistFavorite = (artist: Artists) => {
+    setArtistFavorites(prev => {
+      const isCurrentlyFavorite = prev.some(a => a.artistId === artist.artistId);
+      const newFavorites = isCurrentlyFavorite
+        ? prev.filter(a => a.artistId !== artist.artistId)
+        : [...prev, artist];
+
+      localStorage.setItem('artistFavorites', JSON.stringify(newFavorites));
+      return newFavorites;
+    });
+  };
+
   return (
     <AppContext.Provider
       value={{
         // State
         galleries,
         paintings,
+        artists,
         allPaintings,
         genres,
         selectedGallery,
         selectedPainting,
         selectedGenre,
+        selectedArtist,
         galleryFavorites,
         paintingFavorites,
-        genreFavorites,
+        artistFavorites,
         sortBy,
-        activeTab,
         isLoading,
         modalIsOpen,
         combinedFavoritesCount,
@@ -231,16 +285,17 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         // Actions
         setSelectedGallery,
         setSelectedPainting,
+        setSelectedArtist,
         setSelectedGenre,
         setGalleryFavorites,
         setPaintingFavorites,
-        setGenreFavorites,
-        setActiveTab,
+        setArtistFavorites,
         setSortBy,
         setModalIsOpen,
         handleSelectPainting,
         toggleGalleryFavorite,
-        togglePaintingFavorite
+        togglePaintingFavorite,
+        toggleArtistFavorite
       }}
     >
       {children}
