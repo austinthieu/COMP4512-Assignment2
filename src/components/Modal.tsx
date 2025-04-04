@@ -16,6 +16,8 @@ const PaintingModal: React.FC<PaintingModalProps> = ({ modalIsOpen, setModalIsOp
 
   const closeModal = () => setModalIsOpen(false);
 
+  // Parse JSON into an object so we can map over the dominant colors 
+  const parsedAnnotations = selectedPainting.jsonAnnotations ? JSON.parse(selectedPainting.jsonAnnotations) : null;
 
   const isFavorited = favorites.some(p => p.paintingId === selectedPainting.paintingId);
 
@@ -110,6 +112,17 @@ const PaintingModal: React.FC<PaintingModalProps> = ({ modalIsOpen, setModalIsOp
                   <li><span className="font-medium">Location:</span> {selectedPainting.galleries.galleryCity}</li>
                 </ul>
               </div>
+              <div className="flex gap-2 mt-2">
+                {parsedAnnotations && parsedAnnotations.dominantColors.map((color) => (
+                  <div
+                    key={color.web}
+                    className="w-12 h-12 rounded-sm"
+                    style={{ backgroundColor: color.web }}
+                    title={color.name}
+                  ></div>
+                ))}
+              </div>
+
             </div>
 
             {/* Links */}

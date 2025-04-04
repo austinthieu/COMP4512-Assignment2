@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { useAppContext } from "../AppProvider";
 import Dashboard from "../components/Dashboard";
 import ItemList from "../components/ItemList";
@@ -9,12 +8,9 @@ import Modal from '../components/Modal';
 
 export default function GenreView() {
   const {
-    activeTab,
-    setActiveTab,
     genres,
     selectedGenre,
     setSelectedGenre,
-    combinedFavoritesCount,
     paintings,
     selectedPainting,
     modalIsOpen,

@@ -20,6 +20,7 @@ export default function GalleryView() {
     handleSelectPainting,
     selectedPainting,
     modalIsOpen,
+    showFavoritesModal,
     setModalIsOpen,
     paintingFavorites,
     togglePaintingFavorite,
@@ -48,7 +49,7 @@ export default function GalleryView() {
           />
 
           {/* Middle column - Gallery Info */}
-          {!modalIsOpen && (
+          {!modalIsOpen && !showFavoritesModal && (
             <GalleryInfo
               selectedGallery={selectedGallery}
               favorites={galleryFavorites}

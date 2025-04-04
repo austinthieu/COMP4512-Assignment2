@@ -19,7 +19,10 @@ const ItemList = <T,>({ items, selectedItem, setSelectedItem, getKey, renderItem
             key={getKey(item)}
             className={`py-2 px-3 rounded cursor-pointer hover:bg-gray-700 ${selectedItem && getKey(selectedItem) === getKey(item) ? "bg-indigo-600" : ""
               }`}
-            onClick={() => setSelectedItem(item)}
+            onClick={() => {
+              setSelectedItem(item);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
           >
             {renderItem(item)}
           </li>

@@ -21,6 +21,7 @@ interface AppState {
   sortBy: SortOption;
   isLoading: boolean;
   modalIsOpen: boolean;
+  showFavoritesModal: boolean;
   combinedFavoritesCount: number;
 
   // Actions
@@ -30,6 +31,7 @@ interface AppState {
   setSelectedArtist: (artist: Artists | undefined) => void;
   setSortBy: (sortOption: SortOption) => void;
   setModalIsOpen: (isOpen: boolean) => void;
+  setShowFavoritesModal: (show: boolean) => void;
   setPaintingFavorites: (paintings: Painting[]) => void;
   setGalleryFavorites: (galleries: Gallery[]) => void;
   setArtistsFavorites: (artists: Artists[]) => void;
@@ -38,9 +40,10 @@ interface AppState {
   toggleGalleryFavorite: (gallery: Gallery) => void;
   togglePaintingFavorite: (painting: Painting) => void;
   toggleArtistFavorite: (artist: Artists) => void;
+  clearAllFavorites: () => void;
 }
 
-// Create context with default values
+// Create context
 const AppContext = createContext<AppState | undefined>(undefined);
 
 // Create context provider component
@@ -60,6 +63,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [sortBy, setSortBy] = useState<SortOption>('title');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [showFavoritesModal, setShowFavoritesModal] = useState(false);
   const location = useLocation();
 
   // Combined favorites count
@@ -261,6 +265,13 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     });
   };
 
+  const clearAllFavorites = (): void => {
+    setArtistFavorites([]);
+    setGalleryFavorites([]);
+    setPaintingFavorites([]);
+  };
+
+
   return (
     <AppContext.Provider
       value={{
@@ -280,6 +291,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         sortBy,
         isLoading,
         modalIsOpen,
+        showFavoritesModal,
         combinedFavoritesCount,
 
         // Actions
@@ -292,10 +304,12 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         setArtistFavorites,
         setSortBy,
         setModalIsOpen,
+        setShowFavoritesModal,
         handleSelectPainting,
         toggleGalleryFavorite,
         togglePaintingFavorite,
-        toggleArtistFavorite
+        toggleArtistFavorite,
+        clearAllFavorites,
       }}
     >
       {children}
