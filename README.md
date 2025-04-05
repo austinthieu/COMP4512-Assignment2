@@ -1,54 +1,87 @@
-# React + TypeScript + Vite
+# Art Gallery Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is an art gallery dashboard built using **React**, **TypeScript**, and **Vite**. The project includes a user interface for browsing galleries, viewing paintings, adding favorites, and sorting through collections. It is designed to be a dynamic, responsive, and intuitive platform for managing an art gallery.
 
-Currently, two official plugins are available:
+## Features
+- **Gallery Management:** View different art galleries and their paintings.
+- **Painting Display:** Display a collection of paintings and filter by year, gallery, or artist.
+- **Favorites:** Allow users to mark paintings as favorites.
+- **Sorting & Filtering:** Sort paintings by title, artist, or year.
+- **Interactive Map:** Used Leaflet for displaying maps related to gallery locations.
+- **Backend Integration:** Data is stored and managed through Supabase.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+- **React**: A JavaScript library for building user interfaces.
+- **TypeScript**: A superset of JavaScript that adds static typing.
+- **Vite**: A fast build tool and development server.
+- **Tailwind CSS**: A utility-first CSS framework for creating custom designs.
+- **Leaflet**: A JavaScript library for interactive maps.
+- **Supabase**: A backend-as-a-service platform for database management.
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 1. Clone the repository
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+git clone https://github.com/austinthieu/COMP4513-Assign2.git
+cd COMP4513-Assign2
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Install dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm install
 ```
+
+### 3. Set up environment variables
+
+Make sure to set up the necessary environment variables in a `.env` file for Supabase credentials:
+
+```bash
+VITE_SUPABASE_URL=your-supabase-url
+VITE_SUPABASE_KEY=your-supabase-api-key
+```
+
+### 4. Run the development server
+
+```bash
+npm run dev
+```
+
+This will start the Vite development server and open the project in your default browser.
+
+## Development
+
+### Folder Structure
+
+```
+src/
+├── assets/           # Static assets such as images and icons
+├── components/       # Reusable components like Buttons, Card, etc.
+├── utils/            # Utility functions
+├── App.tsx           # Main React component
+└── index.tsx         # Entry point for React app
+```
+
+
+## Deployment
+
+To deploy the project, you can build it using the following command:
+
+```bash
+npm run build
+```
+
+This will create an optimized production build in the `dist/` directory. You can then deploy the build to your favorite hosting provider (e.g., Vercel, Netlify, or a custom server).
+
+## Contributing
+
+If you would like to contribute to this project, feel free to fork it, create a branch, and submit a pull request. Please ensure your changes follow the project's coding conventions and that all tests pass.
+
+## License
+
+This project is open-source and available under the MIT License.
+
+---
+
+Let me know if you need more details or assistance with the project setup!
