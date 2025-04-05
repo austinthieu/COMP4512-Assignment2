@@ -1,4 +1,4 @@
-# Art Gallery Dashboard
+# Art Gallery Header
 
 This is an art gallery dashboard built using **React**, **TypeScript**, and **Vite**. The project includes a user interface for browsing galleries, viewing paintings, adding favorites, and sorting through collections.
 

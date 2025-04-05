@@ -1,11 +1,11 @@
-import Dashboard from "../components/Dashboard";
+import Header from "../components/Header";
 import Footer from '../components/Footer';
 import { Github, Code, Palette, Database } from 'lucide-react';
 
 export default function About() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-900 text-gray-100">
-      <Dashboard />
+      <Header />
 
       <main className="container mx-auto px-4 py-12 flex-grow">
         <div className="max-w-3xl mx-auto">

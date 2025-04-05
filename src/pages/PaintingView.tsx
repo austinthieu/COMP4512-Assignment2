@@ -1,4 +1,4 @@
-import Dashboard from '../components/Dashboard';
+import Header from '../components/Header';
 import Footer from '../components/Footer';
 import PaintingFilters from '../components/PaintingFilters';
 import PaintingsGrid from '../components/PaintingsGrid'
@@ -23,7 +23,7 @@ export default function PaintingView() {
     <div className="min-h-screen flex flex-col bg-gray-900 text-gray-100">
 
       {/* Header */}
-      <Dashboard />
+      <Header />
 
       {/* Main content grows to fill space */}
       <main className="flex-grow container mx-auto px-4 py-6">

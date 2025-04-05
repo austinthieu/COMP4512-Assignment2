@@ -1,5 +1,5 @@
 import { useAppContext } from "../AppProvider";
-import Dashboard from "../components/Dashboard";
+import Header from "../components/Header";
 import ItemList from "../components/ItemList";
 import GalleryInfo from "../components/GalleryInfo";
 import PaintingsList from "../components/PaintingsList";
@@ -34,7 +34,7 @@ export default function GalleryView() {
       {isLoading && <LoadingScreen />}
 
       {/* Header */}
-      <Dashboard />
+      <Header />
 
       <main className="container mx-auto px-4 py-6">
         <div className="flex gap-6">

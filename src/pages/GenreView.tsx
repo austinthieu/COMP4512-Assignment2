@@ -1,5 +1,5 @@
 import { useAppContext } from "../AppProvider";
-import Dashboard from "../components/Dashboard";
+import Header from "../components/Header";
 import ItemList from "../components/ItemList";
 import GenreInfo from "../components/GenreInfo";
 import GenrePaintings from '../components/GenrePaintings';
@@ -26,7 +26,7 @@ export default function GenreView() {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
       {/* Header */}
-      <Dashboard />
+      <Header />
       <main className="container mx-auto px-4 py-6">
         <div className="flex gap-6">
 

@@ -1,5 +1,5 @@
 import { useAppContext } from "../AppProvider";
-import Dashboard from "../components/Dashboard";
+import Header from "../components/Header";
 import ItemList from "../components/ItemList";
 import Footer from "../components/Footer";
 import ArtistInfo from "../components/ArtistInfo";
@@ -28,7 +28,7 @@ export default function ArtistView() {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
       {/* Header */}
-      <Dashboard />
+      <Header />
 
       <main className="container mx-auto px-4 py-6">
         <div className="flex gap-6">

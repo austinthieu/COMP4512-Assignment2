@@ -3,7 +3,7 @@ import { FaPaintbrush } from "react-icons/fa6";
 import { useAppContext } from "../AppProvider";
 import Favorites from '../pages/Favorites';
 
-export default function Dashboard() {
+export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const { combinedFavoritesCount, setShowFavoritesModal } = useAppContext();
