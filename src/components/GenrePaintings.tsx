@@ -27,7 +27,7 @@ const GenrePaintings = ({
 
   return (
     <>
-      {/* Centered Sort Dropdown */}
+      {/* Sort Dropdown */}
       <div className="flex justify-end content-center mt-4 mr-6">
         <label htmlFor="sortby" className="text-gray-300 mt-2 mr-2 text-sm">
           Sort by:

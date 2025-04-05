@@ -8,12 +8,6 @@ export default function Dashboard() {
   const location = useLocation();
   const { combinedFavoritesCount, setShowFavoritesModal } = useAppContext();
 
-  const getCurrentPageTitle = () => {
-    const path = location.pathname.split('/')[1];
-    if (!path) return "Home";
-    return path.charAt(0).toUpperCase() + path.slice(1);
-  };
-
   const handleTabClick = (tab) => {
     if (tab === "favorites") {
       setShowFavoritesModal(true);

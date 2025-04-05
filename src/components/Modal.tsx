@@ -16,7 +16,7 @@ const PaintingModal: React.FC<PaintingModalProps> = ({ modalIsOpen, setModalIsOp
 
   const closeModal = () => setModalIsOpen(false);
 
-  // Parse JSON into an object so we can map over the dominant colors 
+  // Had to parse into object so we can map over the colors
   const parsedAnnotations = selectedPainting.jsonAnnotations ? JSON.parse(selectedPainting.jsonAnnotations) : null;
 
   const isFavorited = favorites.some(p => p.paintingId === selectedPainting.paintingId);
