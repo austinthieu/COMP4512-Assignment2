@@ -248,6 +248,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     setPaintingFavorites([]);
   };
 
+
   return (
     <AppContext.Provider
       value={{

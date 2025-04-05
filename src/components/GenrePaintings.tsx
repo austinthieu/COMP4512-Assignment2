@@ -1,7 +1,7 @@
 import { Painting, SortOption, Genre } from '../utils/types';
 
 interface GenrePaintingsProps {
-  paintings: Painting[];
+  paintings: Painting[] | null;
   sortBy: SortOption;
   onSortChange: (sortOption: SortOption) => void;
   onSelectPainting: (painting: Painting) => void;
@@ -18,12 +18,14 @@ const GenrePaintings = ({
   if (!selectedGenre) return null;
 
   // Sort paintings based on selected sort criteria
-  const sortedPaintings = [...paintings].sort((a, b) => {
-    if (sortBy === 'title') return a.title.localeCompare(b.title);
-    if (sortBy === 'year') return a.yearOfWork - b.yearOfWork;
-    if (sortBy === 'lastName') return a.artists.lastName.localeCompare(b.artists.lastName);
-    return 0;
-  });
+  const sortedPaintings = paintings
+    ? [...paintings].sort((a, b) => {
+      if (sortBy === 'title') return a.title.localeCompare(b.title);
+      if (sortBy === 'year') return a.yearOfWork - b.yearOfWork;
+      if (sortBy === 'lastName') return a.artists.lastName.localeCompare(b.artists.lastName);
+      return 0;
+    })
+    : [];
 
   return (
     <>

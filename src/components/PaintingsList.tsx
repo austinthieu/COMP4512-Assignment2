@@ -2,7 +2,7 @@ import { Painting, SortOption } from '../utils/types';
 import { useAppContext } from '../AppProvider';
 
 interface PaintingsListProps {
-  paintings: Painting[];
+  paintings: Painting[] | null;
   sortBy: SortOption;
   onSortChange: (sortOption: SortOption) => void;
   onSelectPainting: (painting: Painting) => void;
@@ -17,12 +17,16 @@ const PaintingsList = ({
 }: PaintingsListProps) => {
   const { selectedArtist } = useAppContext();
   // Sort paintings based on selected sort criteria
-  const sortedPaintings = [...paintings].sort((a, b) => {
-    if (sortBy === 'title') return a.title.localeCompare(b.title);
-    if (sortBy === 'year') return a.yearOfWork - b.yearOfWork;
-    if (sortBy === 'lastName') return a.artists.lastName.localeCompare(b.artists.lastName);
-    return 0;
-  });
+  const sortedPaintings = paintings
+    ? [...paintings].sort((a, b) => {
+      if (sortBy === 'title') return a.title.localeCompare(b.title);
+      if (sortBy === 'year') return a.yearOfWork - b.yearOfWork;
+      if (sortBy === 'lastName') return a.artists.lastName.localeCompare(b.artists.lastName);
+      return 0;
+    })
+    : [];
+
+
 
   return (
     <div className="w-full bg-gray-800 rounded-lg p-4 shadow-lg">

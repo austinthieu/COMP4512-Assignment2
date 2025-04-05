@@ -1,7 +1,7 @@
 import { Painting, SortOption } from '../utils/types';
 
 interface PaintingsGridProps {
-  paintings: Painting[];
+  paintings: Painting[] | null;
   sortBy: SortOption;
   onSortChange: (sortOption: SortOption) => void;
   onSelectPainting: (painting: Painting) => void;
@@ -16,14 +16,16 @@ const PaintingsGrid = ({
 
 
   // Sort paintings based on selected sort criteria
-  const sortedPaintings = [...paintings].sort((a, b) => {
-    if (sortBy === 'title') return a.title.localeCompare(b.title);
-    if (sortBy === 'year') return a.yearOfWork - b.yearOfWork;
-    if (sortBy === 'lastName') return a.artists.lastName.localeCompare(b.artists.lastName);
-    return 0;
-  });
+  const sortedPaintings = paintings
+    ? [...paintings].sort((a, b) => {
+      if (sortBy === 'title') return a.title.localeCompare(b.title);
+      if (sortBy === 'year') return a.yearOfWork - b.yearOfWork;
+      if (sortBy === 'lastName') return a.artists.lastName.localeCompare(b.artists.lastName);
+      return 0;
+    })
+    : [];
 
-  if (paintings.length == 0) return
+  if (paintings?.length == 0) return
 
   return (
     <>

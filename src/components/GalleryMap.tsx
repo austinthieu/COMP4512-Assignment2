@@ -5,6 +5,7 @@ import L from 'leaflet';
 // Need to figure out the types for react-leaflet
 
 // Fix Leaflet's icon paths from production (this works in dev without these, but vite bundling messes it up in production)
+// Solution from https://stackoverflow.com/questions/67121660/react-leaflet-not-showing-map-tiles-in-production
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerRetinaIcon from 'leaflet/dist/images/marker-icon-2x.png';
 import shadowIcon from 'leaflet/dist/images/marker-shadow.png';
