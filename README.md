@@ -55,12 +55,14 @@ This will start the Vite development server and open the project in your default
 ### Folder Structure
 
 ```
+public/           # Static assets such as images and icons
 src/
-├── assets/           # Static assets such as images and icons
 ├── components/       # Reusable components like Buttons, Card, etc.
 ├── utils/            # Utility functions
+├── pages/            # The various views of the website
 ├── App.tsx           # Main React component
 └── index.tsx         # Entry point for React app
+└── AppProvider.tsx   # Context for global states that are used by multiple components
 ```
 
 
