@@ -68,7 +68,6 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Fetch galleries
   useEffect(() => {
     const fetchGalleries = async () => {
-      console.log('Fetching galleries...');
       setIsLoading(true);
       const localGalleries = localStorage.getItem('galleries');
       if (localGalleries) {
@@ -90,7 +89,6 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Fetch paintings
   useEffect(() => {
     const fetchAllPaintings = async () => {
-      console.log('Fetching all paintings...');
       setIsLoading(true);
       const localPaintings = localStorage.getItem('all_paintings');
       if (localPaintings) {
@@ -114,7 +112,6 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Fetch artists
   useEffect(() => {
     const fetchArtists = async () => {
-      console.log('Fetching artists...');
       setIsLoading(true);
       const localArtists = localStorage.getItem('artists');
       if (localArtists) {
@@ -136,7 +133,6 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Fetch genres
   useEffect(() => {
     const fetchGenres = async () => {
-      console.log('Fetching genres...');
       setIsLoading(true);
       const localGenres = localStorage.getItem('genres');
       if (localGenres) {
