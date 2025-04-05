@@ -6,7 +6,7 @@ import { Painting, Gallery, SortOption, Genre, Artists } from './utils/types';
 interface AppState {
   // State
   galleries: Gallery[];
-  paintings: Painting[];
+  paintings: Painting[] | null;
   artists: Artists[];
   allPaintings: Painting[];
   genres: Genre[];
@@ -156,6 +156,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     setSelectedGallery(undefined);
     setSelectedGenre(undefined);
     setSelectedArtist(undefined);
+    setPaintings([])
   }, [location.pathname]);
 
   // Handle filter by gallery, genre, artist
