@@ -154,10 +154,10 @@ export default function PaintingFilters() {
           <select
             value={artistFilter}
             onChange={(e) => handleFilterChange(e.target.value, 'artist')}
-            className="w-full p-2 rounded bg-gray-600 text-white"
+            className="w-full p-2 rounded bg-gray-600 text-white cursor-pointer"
             disabled={activeFilter !== 'artist'}
           >
-            <option value="">Select an artist</option>
+            <option value="" className="cursor-pointer">Select an artist</option>
             {artists.map(a => (
               <option key={a.artistId} value={a.artistId}>
                 {a.firstName} {a.lastName}
@@ -184,7 +184,7 @@ export default function PaintingFilters() {
           <select
             value={galleryFilter}
             onChange={(e) => handleFilterChange(e.target.value, 'gallery')}
-            className="w-full p-2 rounded bg-gray-600 text-white"
+            className="w-full p-2 rounded bg-gray-600 text-white cursor-pointer"
             disabled={activeFilter !== 'gallery'}
           >
             <option value="">Select a Gallery</option>
