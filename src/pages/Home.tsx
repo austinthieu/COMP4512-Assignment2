@@ -13,7 +13,7 @@ function Home() {
     setTimeout(() => {
       setIsLoading(false);
       navigate('/galleries');
-    }, 1000);
+    }, 500);
   };
 
   return (

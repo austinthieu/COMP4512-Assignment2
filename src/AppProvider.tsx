@@ -28,6 +28,7 @@ interface AppState {
   setSelectedGallery: (gallery: Gallery | undefined) => void;
   setSelectedPainting: (painting: Painting | undefined) => void;
   setSelectedGenre: (genre: Genre | undefined) => void;
+  setPaintings: (painting: Painting | undefined) => void;
   setSelectedArtist: (artist: Artists | undefined) => void;
   setSortBy: (sortOption: SortOption) => void;
   setModalIsOpen: (isOpen: boolean) => void;
@@ -103,7 +104,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       } else {
         const { data, error } = await supabase
           .from('paintings')
-          .select('*, artists!inner(firstName, lastName), galleries!inner(galleryName, galleryCity, galleryWebSite)');
+          .select('*, artists!inner(artistId, firstName, lastName), galleries!inner(galleryId, galleryName, galleryCity, galleryWebSite)');
         if (!error && data) {
           setAllPaintings(data);
           localStorage.setItem('all_paintings', JSON.stringify(data));
@@ -171,7 +172,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     setSelectedArtist(undefined);
   }, [location.pathname]);
 
-  // Load paintings for the selected Galleru/Genre/Artist
+  // Load paintings for the selected Gallery/Genre/Artist
   useEffect(() => {
     if (selectedGallery || selectedGenre || selectedArtist) {
       let filteredPaintings = allPaintings;
@@ -302,6 +303,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         setGalleryFavorites,
         setPaintingFavorites,
         setArtistFavorites,
+        setPaintings,
         setSortBy,
         setModalIsOpen,
         setShowFavoritesModal,
@@ -319,9 +321,6 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 export const useAppContext = () => {
   const context = useContext(AppContext);
-  if (!context) {
-    throw new Error("useAppContext must be used within an AppProvider");
-  }
   return context;
 };
 
