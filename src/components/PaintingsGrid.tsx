@@ -1,5 +1,4 @@
 import { Painting, SortOption } from '../utils/types';
-import Modal from '../components/Modal'
 
 interface PaintingsGridProps {
   paintings: Painting[];
@@ -44,7 +43,7 @@ const PaintingsGrid = ({
       </div>
 
       {/* Paintings Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 p-6 ">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 p-6">
         {sortedPaintings.map((painting) => (
           <div
             key={painting.paintingId}
@@ -59,12 +58,18 @@ const PaintingsGrid = ({
               />
             </div>
             <div className="p-3">
-              <h3 className="font-bold text-lg mb-1 text-white">{painting.title}</h3>
-              <p className="text-sm text-gray-300">
-                <span className="font-medium">{painting.artists.firstName} {painting.artists.lastName}</span>
-                <span className="mx-1">•</span>
-                <span>{painting.yearOfWork}</span>
-              </p>
+              <h3 className="font-bold text-lg mb-2 text-white">{painting.title}</h3>
+              <div className="text-sm text-gray-300 flex flex-col gap-1">
+                <span className="font-semibold text-white">
+                  {painting.artists.firstName} {painting.artists.lastName}
+                </span>
+                <span className="text-gray-400">Year: {painting.yearOfWork}</span>
+                <span className="text-gray-400">Gallery: {painting.galleries.galleryName}</span>
+                <span className="text-gray-400">Medium: {painting.medium}</span>
+                <span className="text-gray-400">
+                  Dimensions: {painting.width}cm × {painting.height}cm
+                </span>
+              </div>
             </div>
           </div>
         ))}

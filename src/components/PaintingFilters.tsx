@@ -8,7 +8,6 @@ export default function PaintingFilters() {
   const [yearLessFilter, setYearLessFilter] = useState('1650');
   const [yearGreaterFilter, setYearGreaterFilter] = useState('1600');
   const [activeFilter, setActiveFilter] = useState('year');
-  const [filtersApplied, setFiltersApplied] = useState(false);
 
   const {
     setPaintings,
@@ -34,7 +33,6 @@ export default function PaintingFilters() {
   };
 
   const handleFilterChange = (value, filterType) => {
-    setFiltersApplied(false);
     switch (filterType) {
       case 'title':
         setTitleFilter(value);
@@ -68,7 +66,6 @@ export default function PaintingFilters() {
 
   const applyFilters = () => {
     let filteredPaintings = allPaintings;
-    console.log(filteredPaintings);
 
     // Apply only the active filter
     switch (activeFilter) {
@@ -82,14 +79,14 @@ export default function PaintingFilters() {
       case 'artist':
         if (artistFilter) {
           filteredPaintings = filteredPaintings.filter(painting =>
-            painting.artists.artistId === artistFilter
+            painting.artists.artistId === Number(artistFilter)
           );
         }
         break;
       case 'gallery':
         if (galleryFilter) {
           filteredPaintings = filteredPaintings.filter(painting =>
-            painting.galleries.galleryId === galleryFilter
+            painting.galleries.galleryId === Number(galleryFilter)
           );
         }
         break;
@@ -110,19 +107,12 @@ export default function PaintingFilters() {
     }
 
     setPaintings(filteredPaintings);
-    setFiltersApplied(true);
   };
 
 
   return (
-    <div className="w-1/4 bg-gray-800 rounded-lg p-4 shadow-lg">
+    <div className="w-1/4 bg-gray-800 rounded-lg p-4 shadow-lg max-h-[550px]">
       <h2 className="text-xl font-bold mb-4">Painting Filters</h2>
-
-      {filtersApplied && (
-        <div className="mb-4 p-2 bg-blue-500 bg-opacity-20 rounded">
-          <p className="text-sm">Filter by {activeFilter} applied</p>
-        </div>
-      )}
 
       {/* Title Filter */}
       <div className="mb-4">
@@ -142,7 +132,7 @@ export default function PaintingFilters() {
           value={titleFilter}
           onChange={(e) => handleFilterChange(e.target.value, 'title')}
           className="w-full p-2 rounded bg-gray-600"
-          placeholder="Search by title..."
+          placeholder="Search by title"
           disabled={activeFilter !== 'title'}
         />
       </div>
