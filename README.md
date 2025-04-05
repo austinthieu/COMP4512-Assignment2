@@ -55,7 +55,7 @@ This will start the Vite development server and open the project in your default
 ### Folder Structure
 
 ```
-public/           # Static assets such as images and icons
+public/               # Static assets such as images and icons
 src/
 ├── components/       # Reusable components like Buttons, Card, etc.
 ├── utils/            # Utility functions
