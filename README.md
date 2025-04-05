@@ -57,7 +57,7 @@ This will start the Vite development server and open the project in your default
 ```
 public/               # Static assets such as images and icons
 src/
-├── components/       # Reusable components like Buttons, Card, etc.
+├── components/       # Reusable components like Grids, Footer, etc.
 ├── utils/            # Utility functions
 ├── pages/            # The various views of the website
 ├── App.tsx           # Main React component
