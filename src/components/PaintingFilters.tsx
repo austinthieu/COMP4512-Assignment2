@@ -17,7 +17,7 @@ export default function PaintingFilters() {
   } = useAppContext();
 
   // Reset other filters when active filter changes
-  const handleFilterRadioChange = (filterType) => {
+  const handleFilterRadioChange = (filterType: string) => {
     setActiveFilter(filterType);
 
     // Reset all filter values except the selected one
@@ -30,7 +30,7 @@ export default function PaintingFilters() {
     }
   };
 
-  const handleFilterChange = (value, filterType) => {
+  const handleFilterChange = (value: string, filterType: string) => {
     switch (filterType) {
       case 'title':
         setTitleFilter(value);

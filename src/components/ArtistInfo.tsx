@@ -3,7 +3,7 @@ import { FaHeart, FaHeartBroken } from 'react-icons/fa';
 import toast, { Toaster } from "react-hot-toast";
 
 const ArtistInfo = ({ selectedArtist, artistFavorites, toggleArtistFavorite }: {
-  selectedArtist: Artists;
+  selectedArtist: Artists | undefined;
   artistFavorites: Artists[];
   toggleArtistFavorite: (artist: Artists) => void;
 }) => {
@@ -13,12 +13,14 @@ const ArtistInfo = ({ selectedArtist, artistFavorites, toggleArtistFavorite }: {
 
   const toggleFavorite = () => {
     if (isFavorited) {
-      toast.success("Removed artist from favorites", { id: `fav-toast-${selectedArtist.artistId}` });
+      toast.success("Removed artist from favorites", { id: `fav-toast-${selectedArtist?.artistId}` });
     } else {
-      toast.success("Added artist to favorites!", { id: `fav-toast-${selectedArtist.artistId}` });
+      toast.success("Added artist to favorites!", { id: `fav-toast-${selectedArtist?.artistId}` });
     }
 
-    toggleArtistFavorite(selectedArtist);
+    if (selectedArtist) {
+      toggleArtistFavorite(selectedArtist);
+    }
   };
 
   return (

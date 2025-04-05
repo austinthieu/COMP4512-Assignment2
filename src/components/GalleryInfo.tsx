@@ -4,7 +4,7 @@ import { Gallery } from '../utils/types';
 import toast, { Toaster } from "react-hot-toast";
 
 const GalleryInfo = ({ selectedGallery, favorites, setFavorites }: {
-  selectedGallery: Gallery;
+  selectedGallery: Gallery | undefined;
   favorites: Gallery[];
   setFavorites: Function;
 }) => {
@@ -15,9 +15,9 @@ const GalleryInfo = ({ selectedGallery, favorites, setFavorites }: {
 
   const toggleFavorite = () => {
     if (isFavorited) {
-      toast.success("Removed gallery from favorites", { id: `fav-toast-${selectedGallery.galleryId}` });
+      toast.success("Removed gallery from favorites", { id: `fav-toast-${selectedGallery?.galleryId}` });
     } else {
-      toast.success("Added gallery to favorites!", { id: `fav-toast-${selectedGallery.galleryId}` });
+      toast.success("Added gallery to favorites!", { id: `fav-toast-${selectedGallery?.galleryId}` });
     }
 
     setFavorites(selectedGallery);

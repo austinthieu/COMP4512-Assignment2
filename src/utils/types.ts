@@ -57,7 +57,7 @@ export interface Genre {
   eraId: number;
   description: string;
   wikiLink: string;
-  paintinggenres: paintinggenres;
+  paintinggenres: paintinggenres[];
 }
 
 export interface paintinggenres {
@@ -66,5 +66,5 @@ export interface paintinggenres {
   genreId: number;
 }
 
-export type SortOption = 'title' | 'year' | 'artist';
+export type SortOption = 'title' | 'year' | 'artist' | "lastName";
 

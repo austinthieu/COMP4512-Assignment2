@@ -1,6 +1,6 @@
 import { Genre } from '../utils/types';
 
-const GenreInfo = ({ selectedGenre }: { selectedGenre: Genre }) => {
+const GenreInfo = ({ selectedGenre }: { selectedGenre: Genre | undefined }) => {
   return (
     selectedGenre ? (
       <div className="bg-gray-800 rounded-lg p-6 shadow-lg w-full mx-auto h-fit">

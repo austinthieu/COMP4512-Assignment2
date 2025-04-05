@@ -1,12 +1,13 @@
 import { Delete } from "lucide-react";
+import { Artists, Gallery, Painting } from '../utils/types';
 
 interface FavoritesGridProps {
-  galleryFavorites: { galleryId: string; galleryName: string }[];
-  artistFavorites: { artistId: string; firstName: string; lastName: string }[];
-  paintingFavorites: { paintingId: string; title: string }[];
-  toggleGalleryFavorite: (gallery: { galleryId: string; galleryName: string }) => void;
-  toggleArtistFavorite: (artist: { artistId: string; firstName: string; lastName: string }) => void;
-  togglePaintingFavorite: (painting: { paintingId: string; title: string }) => void;
+  galleryFavorites: Gallery[];
+  artistFavorites: Artists[];
+  paintingFavorites: Painting[];
+  toggleGalleryFavorite: (gallery: Gallery) => void;
+  toggleArtistFavorite: (artists: Artists) => void;
+  togglePaintingFavorite: (painting: Painting) => void;
 }
 
 const FavoritesGrid: React.FC<FavoritesGridProps> = ({
@@ -54,7 +55,7 @@ interface FavoriteSectionProps<T> {
   items: T[];
   onDelete: (item: T) => void;
   itemLabel: (item: T) => string;
-  itemKey: (item: T) => string;
+  itemKey: (item: T) => number;
 }
 
 const FavoriteSection = <T,>({

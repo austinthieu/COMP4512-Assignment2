@@ -43,8 +43,8 @@ export default function GalleryView() {
             items={galleries.sort((a, b) => a.galleryName.localeCompare(b.galleryName))}
             selectedItem={selectedGallery}
             setSelectedItem={setSelectedGallery}
-            getKey={(gallery) => gallery.galleryId}
-            renderItem={(gallery) => <span>{gallery.galleryName}</span>}
+            getKey={(gallery) => gallery?.galleryId ?? 0}
+            renderItem={(gallery) => gallery ? <span>{gallery.galleryName}</span> : null}
             title="Galleries"
           />
 

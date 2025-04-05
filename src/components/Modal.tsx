@@ -5,10 +5,10 @@ import toast, { Toaster } from 'react-hot-toast';
 
 interface PaintingModalProps {
   modalIsOpen: boolean;
-  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalIsOpen: (isOpen: boolean) => void;
   selectedPainting: Painting | null;
   favorites: Painting[];
-  setPaintingsFavorite: React.Dispatch<React.SetStateAction<Painting[]>>;
+  setPaintingsFavorite: (painting: Painting) => void;
 }
 
 const PaintingModal: React.FC<PaintingModalProps> = ({ modalIsOpen, setModalIsOpen, selectedPainting, favorites, setPaintingsFavorite }) => {
@@ -113,7 +113,7 @@ const PaintingModal: React.FC<PaintingModalProps> = ({ modalIsOpen, setModalIsOp
                 </ul>
               </div>
               <div className="flex gap-2 mt-2">
-                {parsedAnnotations && parsedAnnotations.dominantColors.map((color) => (
+                {parsedAnnotations && parsedAnnotations.dominantColors.map((color: any) => (
                   <div
                     key={color.web}
                     className="w-12 h-12 rounded-sm"

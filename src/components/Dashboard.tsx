@@ -8,7 +8,7 @@ export default function Dashboard() {
   const location = useLocation();
   const { combinedFavoritesCount, setShowFavoritesModal } = useAppContext();
 
-  const handleTabClick = (tab) => {
+  const handleTabClick = (tab: string) => {
     if (tab === "favorites") {
       setShowFavoritesModal(true);
     } else {

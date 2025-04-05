@@ -10,14 +10,13 @@ interface AppState {
   artists: Artists[];
   allPaintings: Painting[];
   genres: Genre[];
-  selectedGallery: Gallery;
-  selectedPainting: Painting;
-  selectedGenre: Genre;
-  selectedArtist: Artists;
+  selectedGallery: Gallery | undefined;
+  selectedPainting: Painting | undefined;
+  selectedGenre: Genre | undefined;
+  selectedArtist: Artists | undefined;
   galleryFavorites: Gallery[];
   paintingFavorites: Painting[];
   artistFavorites: Artists[];
-  genreFavorites: Genre[];
   sortBy: SortOption;
   isLoading: boolean;
   modalIsOpen: boolean;
@@ -28,15 +27,14 @@ interface AppState {
   setSelectedGallery: (gallery: Gallery | undefined) => void;
   setSelectedPainting: (painting: Painting | undefined) => void;
   setSelectedGenre: (genre: Genre | undefined) => void;
-  setPaintings: (painting: Painting | undefined) => void;
+  setPaintings: (painting: Painting[]) => void;
   setSelectedArtist: (artist: Artists | undefined) => void;
   setSortBy: (sortOption: SortOption) => void;
   setModalIsOpen: (isOpen: boolean) => void;
   setShowFavoritesModal: (show: boolean) => void;
   setPaintingFavorites: (paintings: Painting[]) => void;
   setGalleryFavorites: (galleries: Gallery[]) => void;
-  setArtistsFavorites: (artists: Artists[]) => void;
-  setGenreFavorites: (genres: Genre[]) => void;
+  setArtistFavorites: (artists: Artists[]) => void;
   handleSelectPainting: (painting: Painting) => void;
   toggleGalleryFavorite: (gallery: Gallery) => void;
   togglePaintingFavorite: (painting: Painting) => void;
@@ -44,19 +42,17 @@ interface AppState {
   clearAllFavorites: () => void;
 }
 
-// Create context
 const AppContext = createContext<AppState | undefined>(undefined);
 
-// Create context provider component
 const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [galleries, setGalleries] = useState<Gallery[]>([]);
   const [paintings, setPaintings] = useState<Painting[]>([]);
   const [artists, setArtists] = useState<Artists[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
-  const [selectedGallery, setSelectedGallery] = useState<Gallery>();
-  const [selectedPainting, setSelectedPainting] = useState<Painting>();
-  const [selectedGenre, setSelectedGenre] = useState<Genre>();
-  const [selectedArtist, setSelectedArtist] = useState<Artists>();
+  const [selectedGallery, setSelectedGallery] = useState<Gallery | undefined>(undefined);
+  const [selectedPainting, setSelectedPainting] = useState<Painting | undefined>(undefined);
+  const [selectedGenre, setSelectedGenre] = useState<Genre | undefined>(undefined);
+  const [selectedArtist, setSelectedArtist] = useState<Artists | undefined>(undefined);
   const [allPaintings, setAllPaintings] = useState<Painting[]>([]);
   const [galleryFavorites, setGalleryFavorites] = useState<Gallery[]>([]);
   const [paintingFavorites, setPaintingFavorites] = useState<Painting[]>([]);
@@ -67,10 +63,9 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [showFavoritesModal, setShowFavoritesModal] = useState(false);
   const location = useLocation();
 
-  // Combined favorites count
   const combinedFavoritesCount = galleryFavorites.length + paintingFavorites.length + artistFavorites.length;
 
-  // Fetch galleries from Supabase or local storage
+  // Fetch galleries
   useEffect(() => {
     const fetchGalleries = async () => {
       console.log('Fetching galleries...');
@@ -89,11 +84,10 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       }
       setIsLoading(false);
     };
-
     fetchGalleries();
   }, []);
 
-  // Fetch all paintings from Supabase or local storage
+  // Fetch paintings
   useEffect(() => {
     const fetchAllPaintings = async () => {
       console.log('Fetching all paintings...');
@@ -114,36 +108,32 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       }
       setIsLoading(false);
     };
-
     fetchAllPaintings();
   }, []);
 
-  // Fetch all artists from Supabase or local storage
+  // Fetch artists
   useEffect(() => {
-    const fetchAllPaintings = async () => {
-      console.log('Fetching all artists...');
+    const fetchArtists = async () => {
+      console.log('Fetching artists...');
       setIsLoading(true);
       const localArtists = localStorage.getItem('artists');
       if (localArtists) {
         setArtists(JSON.parse(localArtists));
       } else {
-        const { data, error } = await supabase
-          .from('artists')
-          .select('*');
+        const { data, error } = await supabase.from('artists').select('*');
         if (!error && data) {
           setArtists(data);
           localStorage.setItem('artists', JSON.stringify(data));
         } else {
-          console.error('Error fetching artists', error);
+          console.error('Error fetching artists:', error);
         }
       }
       setIsLoading(false);
     };
-
-    fetchAllPaintings();
+    fetchArtists();
   }, []);
 
-  // Fetch genres from Supabase or local storage
+  // Fetch genres
   useEffect(() => {
     const fetchGenres = async () => {
       console.log('Fetching genres...');
@@ -162,17 +152,17 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       }
       setIsLoading(false);
     };
-
     fetchGenres();
   }, []);
 
+  // Reset selections on path change
   useEffect(() => {
     setSelectedGallery(undefined);
     setSelectedGenre(undefined);
     setSelectedArtist(undefined);
   }, [location.pathname]);
 
-  // Load paintings for the selected Gallery/Genre/Artist
+  // Handle filter by gallery, genre, artist
   useEffect(() => {
     if (selectedGallery || selectedGenre || selectedArtist) {
       let filteredPaintings = allPaintings;
@@ -188,7 +178,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       }
 
       if (selectedArtist) {
-        filteredPaintings = filteredPaintings.filter(painting => painting.artistId === selectedArtist.artistId)
+        filteredPaintings = filteredPaintings.filter(painting => painting.artistId === selectedArtist.artistId);
       }
 
       setPaintings(filteredPaintings);
@@ -197,7 +187,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }
   }, [selectedGallery, selectedGenre, selectedArtist, allPaintings]);
 
-  // Load favorites from localStorage on first render
+  // Load favorites from localStorage
   useEffect(() => {
     const savedGalleryFavorites = localStorage.getItem('galleryFavorites');
     if (savedGalleryFavorites) {
@@ -215,36 +205,27 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }
   }, []);
 
-  // When a painting is selected, open the modal
+  // Handle selection of painting
   const handleSelectPainting = (painting: Painting) => {
     setSelectedPainting(painting);
     setModalIsOpen(true);
   };
 
-  // Toggle gallery favorite
+  // Toggle favorites actions for gallery, painting, artist
   const toggleGalleryFavorite = (gallery: Gallery) => {
     setGalleryFavorites(prevFavorites => {
-      const isCurrentlyFavorite = prevFavorites.some(g => g.galleryId === gallery.galleryId);
-
-      // Update the favorites list
-      const newFavorites = isCurrentlyFavorite
+      const newFavorites = prevFavorites.some(g => g.galleryId === gallery.galleryId)
         ? prevFavorites.filter(g => g.galleryId !== gallery.galleryId)
         : [...prevFavorites, gallery];
 
-      // Only update localStorage if the favorites actually change
-      if (newFavorites !== prevFavorites) {
-        localStorage.setItem('galleryFavorites', JSON.stringify(newFavorites));
-      }
-
+      localStorage.setItem('galleryFavorites', JSON.stringify(newFavorites));
       return newFavorites;
     });
   };
 
-  // Toggle painting favorite
   const togglePaintingFavorite = (painting: Painting) => {
     setPaintingFavorites(prev => {
-      const isCurrentlyFavorite = prev.some(p => p.paintingId === painting.paintingId);
-      const newFavorites = isCurrentlyFavorite
+      const newFavorites = prev.some(p => p.paintingId === painting.paintingId)
         ? prev.filter(p => p.paintingId !== painting.paintingId)
         : [...prev, painting];
 
@@ -253,11 +234,9 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     });
   };
 
-  // Toggle painting favorite
   const toggleArtistFavorite = (artist: Artists) => {
     setArtistFavorites(prev => {
-      const isCurrentlyFavorite = prev.some(a => a.artistId === artist.artistId);
-      const newFavorites = isCurrentlyFavorite
+      const newFavorites = prev.some(a => a.artistId === artist.artistId)
         ? prev.filter(a => a.artistId !== artist.artistId)
         : [...prev, artist];
 
@@ -272,11 +251,9 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     setPaintingFavorites([]);
   };
 
-
   return (
     <AppContext.Provider
       value={{
-        // State
         galleries,
         paintings,
         artists,
@@ -294,8 +271,6 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         modalIsOpen,
         showFavoritesModal,
         combinedFavoritesCount,
-
-        // Actions
         setSelectedGallery,
         setSelectedPainting,
         setSelectedArtist,
@@ -321,7 +296,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 export const useAppContext = () => {
   const context = useContext(AppContext);
-  return context;
+  return context!;
 };
 
 export default AppProvider;
