@@ -20,25 +20,25 @@ export default function PaintingView() {
 
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100">
+    <div className="min-h-screen flex flex-col bg-gray-900 text-gray-100">
 
       {/* Header */}
       <Dashboard />
 
-      <main className="container mx-auto px-4 py-6">
-
+      {/* Main content grows to fill space */}
+      <main className="flex-grow container mx-auto px-4 py-6">
         <div className="flex gap-6">
           <PaintingFilters />
 
           <div className="flex-col max-w-6xl">
-            <PaintingsGrid paintings={paintings}
+            <PaintingsGrid
+              paintings={paintings}
               sortBy={sortBy}
               onSortChange={(option) => setSortBy(option)}
               onSelectPainting={handleSelectPainting}
             />
           </div>
         </div>
-
       </main>
 
       {/* Painting Modal */}
@@ -52,8 +52,7 @@ export default function PaintingView() {
         />
       )}
 
-
-      < Footer />
+      <Footer />
     </div>
-  )
+  );
 }

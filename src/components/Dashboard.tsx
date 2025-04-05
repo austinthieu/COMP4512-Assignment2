@@ -33,7 +33,6 @@ export default function Dashboard() {
               <FaPaintbrush className="text-6xl text-indigo-600 hover:text-indigo-400 cursor-pointer" onClick={() => navigate('/')} />
               <div className="flex flex-col">
                 <div className="text-2xl font-semibold">Art Dashboard Project</div>
-                <h1 className="text-lg font-medium">{getCurrentPageTitle()} View</h1>
               </div>
             </div>
             <div className="flex space-x-2">

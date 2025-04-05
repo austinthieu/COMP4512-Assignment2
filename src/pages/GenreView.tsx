@@ -40,7 +40,7 @@ export default function GenreView() {
             title="Genres"
           />
 
-          <div className="flex-col max-w-6xl">
+          <div className="flex-col w-full max-w-6xl">
             <GenreInfo selectedGenre={selectedGenre} />
             <GenrePaintings paintings={paintings}
               sortBy={sortBy}

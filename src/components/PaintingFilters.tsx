@@ -28,8 +28,6 @@ export default function PaintingFilters() {
       setYearLessFilter('');
       setYearGreaterFilter('');
     }
-
-    setFiltersApplied(false);
   };
 
   const handleFilterChange = (value, filterType) => {
@@ -60,8 +58,6 @@ export default function PaintingFilters() {
     setGalleryFilter('');
     setYearLessFilter('1650');
     setYearGreaterFilter('1600');
-    setFiltersApplied(false);
-
   };
 
   const applyFilters = () => {
@@ -108,6 +104,10 @@ export default function PaintingFilters() {
 
     setPaintings(filteredPaintings);
   };
+
+  useEffect(() => {
+    applyFilters();
+  }, [allPaintings])
 
 
   return (
@@ -247,7 +247,7 @@ export default function PaintingFilters() {
           onClick={applyFilters}
           className="flex-1 bg-blue-600 py-2 rounded hover:bg-blue-500 transition-colors cursor-pointer"
         >
-          Apply Filters
+          Search
         </button>
       </div>
     </div>

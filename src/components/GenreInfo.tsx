@@ -17,7 +17,7 @@ const GenreInfo = ({ selectedGenre }: { selectedGenre: Genre }) => {
       </div>
     ) : (
 
-      <div className="bg-gray-800 rounded-lg p-6 shadow-lg w-full mx-auto h-fit">
+      <div className="bg-gray-800 flex justify-center rounded-lg p-6 shadow-lg w-full mx-auto h-fit">
         <div className="text-gray-400">Select a genre to view details</div>
       </div>
     )

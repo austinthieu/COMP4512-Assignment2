@@ -75,7 +75,7 @@ const FavoriteSection = <T,>({
                 <span className="text-white font-medium truncate">{itemLabel(item)}</span>
                 <button
                   onClick={() => onDelete(item)}
-                  className="px-3 py-1 bg-red-400 hover:bg-red-600 text-white rounded-lg shadow-md transition duration-300 text-sm cursor-pointer"
+                  className="ml-2 px-3 py-1 bg-red-500 hover:bg-red-700 text-white rounded-lg shadow-md transition duration-300 text-sm cursor-pointer"
                 >
                   <div className="flex gap-2">
                     <Delete size={20} />
